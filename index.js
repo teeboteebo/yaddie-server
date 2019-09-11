@@ -4,6 +4,7 @@ const session = require("express-session")
 const MongoStore = require("connect-mongo")(session)
 const settings = require("./config/settings.json")
 const connectToDb = require("./config/db")
+const tagRoutes = require("./API/tagRoutes")
 
 connectToDb()
 
@@ -23,5 +24,7 @@ app.use(
     })
   })
 )
+
+app.use(tagRoutes)
 
 app.listen(5000, () => console.log(`Tojj Server is on port 5000`))
