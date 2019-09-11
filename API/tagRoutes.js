@@ -27,4 +27,27 @@ router.post("/api/tag/", (req, res) => {
   })
 })
 
+router.delete("/api/tag/id/:id/delete", async (req, res) => {
+  const tag = await Tag.findById(req.params.id)
+  tag.delete(function(err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send()
+    }
+  })
+})
+
+router.put("/api/tag/id/:id/edit", async (req, res) => {
+  let tag = await Tag.findById(req.params.id)
+  tag.name = "bytat"
+  tag.save(function(err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send()
+    }
+  })
+})
+
 module.exports = router
