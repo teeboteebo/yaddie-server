@@ -14,4 +14,17 @@ router.get("/api/tag", async (req, res) => {
     })
 })
 
+router.post("/api/tag/", (req, res) => {
+  const tag = new Tag(req.body.name)
+  console.log(tag)
+  tag.save(function(err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send()
+      console.log(tag, "SAVED")
+    }
+  })
+})
+
 module.exports = router
