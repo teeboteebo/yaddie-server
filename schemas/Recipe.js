@@ -9,7 +9,9 @@ let recipeSchema = new Schema({
   image: { type: String, required: true },
   time: { type: Number, required: true },
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag", required: true }],
-  ingredients: [{ type: Schema.Types.ObjectId, ref: "Tag", required: true }]
+  ingredients: [
+    { type: Schema.Types.ObjectId, ref: "Ingredient", required: true }
+  ]
 })
 
 module.exports = mongoose.model("Recipe", recipeSchema)
