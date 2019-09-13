@@ -3,7 +3,7 @@ const Tag = require("../schemas/Tag")
 
 const router = express.Router()
 
-router.get("/api/tag", async (req, res) => {
+router.get("/api/tags", async (req, res) => {
   const tags = Tag.find({})
     .exec()
     .then(data => {
@@ -11,7 +11,7 @@ router.get("/api/tag", async (req, res) => {
     })
 })
 
-router.post("/api/tag/", (req, res) => {
+router.post("/api/tags/", (req, res) => {
   const tag = new Tag(req.body.name)
   console.log(tag)
   tag.save(function(err) {
@@ -24,7 +24,7 @@ router.post("/api/tag/", (req, res) => {
   })
 })
 
-router.put("/api/tag/id/:id/edit", async (req, res) => {
+router.put("/api/tags/id/:id/edit", async (req, res) => {
   let tag = await Tag.findById(req.params.id)
   tag.name = "bytat"
   tag.save(function(err) {
@@ -36,7 +36,7 @@ router.put("/api/tag/id/:id/edit", async (req, res) => {
   })
 })
 
-router.delete("/api/tag/id/:id/delete", async (req, res) => {
+router.delete("/api/tags/id/:id/delete", async (req, res) => {
   const tag = await Tag.findById(req.params.id)
   tag.delete(function(err) {
     if (err) {
