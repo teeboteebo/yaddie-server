@@ -8,8 +8,8 @@ let recipeSchema = new Schema({
   link: { type: String, unique: true, required: true },
   image: { type: String, required: true },
   time: { type: Number, required: true },
-  tags: { type: Array, required: true },
-  ingredients: { type: Array, required: true }
+  tags: [{ type: Schema.Types.ObjectId, ref: "Tag", required: true }],
+  ingredients: [{ type: Schema.Types.ObjectId, ref: "Tag", required: true }]
 })
 
 module.exports = mongoose.model("Recipe", recipeSchema)
