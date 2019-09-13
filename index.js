@@ -12,7 +12,7 @@ connectToDb()
 const app = express()
 
 app.use(bodyParser.json())
-app.get("/", (req, res) => res.send("Welcome To Tojj Server"))
+app.get("/", (req, res) => res.send("Welcome To Yaddie Server"))
 global.salt = settings.salt
 
 app.use(
@@ -28,4 +28,4 @@ app.use(
 
 app.use(tagRoutes, recipeRoutes)
 
-app.listen(5000, () => console.log(`Tojj Server is on port 5000`))
+app.listen(5000, () => console.log(`Yaddie Server is on port 5000`))
