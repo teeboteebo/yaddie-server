@@ -4,7 +4,7 @@ const Ingredient = require("../schemas/Ingredient")
 const router = express.Router()
 
 router.get("/api/ingredients", async (req, res) => {
-  const Ingredient = Ingredient.find({})
+  const ingredient = Ingredient.find({})
     .exec()
     .then(data => {
       res.status(200).send(data)
