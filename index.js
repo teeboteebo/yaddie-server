@@ -6,6 +6,7 @@ const settings = require("./config/settings.json")
 const connectToDb = require("./config/db")
 const tagRoutes = require("./API/tagRoutes")
 const recipeRoutes = require("./API/recipeRoutes")
+const ingredientRoutes = require("./API/ingredientRoutes")
 
 connectToDb()
 
@@ -26,6 +27,6 @@ app.use(
   })
 )
 
-app.use(tagRoutes, recipeRoutes)
+app.use(tagRoutes, recipeRoutes, ingredientRoutes)
 
 app.listen(5000, () => console.log(`Yaddie Server is on port 5000`))
