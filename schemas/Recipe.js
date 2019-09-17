@@ -9,12 +9,9 @@ let recipeSchema = new Schema({
   desc:         { type: String, required: true },
   rating:       { type: Number, required: true },
   link:         { type: String, unique: true, required: true },
-  tags:         [
-    { type: Schema.Types.ObjectId, ref: "Tag", required: true }
-  ],
-  ingredients:  [
-    { type: Schema.Types.ObjectId, ref: "Ingredient", required: true }
-  ],
+  tags:         { type: Array, required: true },
+  ingredients:  { type: Array, required: true },
+  nutrients:    { type: Array, required: true },
   instructions: { type: Array, required: true },
 })
 

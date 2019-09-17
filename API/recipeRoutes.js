@@ -11,9 +11,34 @@ router.get("/api/recipes", async (req, res) => {
     })
 })
 
+// Find one recipe by id
+
+router.get("/api/recipes/id/:id", (req, res) => {
+  const recipe = Recipe.findById(req.params.id)
+    .exec()
+    .catch(err => {
+      return 'No match'
+    })
+    .then(data => {
+      console.log(data)
+      res.status(200).send(data)
+    })
+
+})
+
 router.get("/api/recipes/populated", (req, res) => {
-  Event.find()
-    .populate("tags")
+  Recipe.find()
+    // .populate("tags")
+    .exec()
+    .then(data => {
+      res.status(200).send(data)
+    })
+})
+
+router.get("/api/recipes/populated/:id", (req, res) => {
+  const recipe = Recipe.findById(req.params.id)
+    .populate('tags')
+    .populate('ingredients')
     .exec()
     .then(data => {
       res.status(200).send(data)
@@ -22,7 +47,7 @@ router.get("/api/recipes/populated", (req, res) => {
 
 router.post("/api/recipes/", (req, res) => {
   const recipe = new Recipe(req.body.content)
-  recipe.save(function(err) {
+  recipe.save(function (err) {
     if (err) {
       next(err)
     } else {
@@ -42,7 +67,7 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
   recipe.time = req.body.content.time
   recipe.tags = req.body.content.tags
 
-  recipe.save(function(err) {
+  recipe.save(function (err) {
     if (err) {
       next(err)
     } else {
@@ -53,7 +78,7 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
 
 router.delete("/api/recipes/id/:id/delete", async (req, res) => {
   const recipe = await Recipe.findById(req.params.id)
-  recipe.delete(function(err) {
+  recipe.delete(function (err) {
     if (err) {
       next(err)
     } else {
