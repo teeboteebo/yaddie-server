@@ -12,7 +12,15 @@ router.get("/api/tags", async (req, res) => {
 });
 
 router.get("/api/tag/:search", async (req, res) => {
-  res.json(await Tag.find({ name: new RegExp(req.params.search, "i") }));
+  await Tag.find({
+    name: new RegExp(req.params.search, "i")
+  })
+    .catch(err => {
+      return;
+    })
+    .then(data => {
+      res.status(200).send(data);
+    });
 });
 
 router.post("/api/tag/", (req, res) => {
