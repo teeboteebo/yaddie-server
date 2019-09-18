@@ -3,7 +3,7 @@ const Tag = require("../schemas/Tag");
 
 const router = express.Router();
 
-router.get("/api/tag", async (req, res) => {
+router.get("/api/tags", async (req, res) => {
   const tags = Tag.find({})
     .exec()
     .then(data => {

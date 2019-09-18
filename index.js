@@ -5,13 +5,15 @@ const MongoStore = require("connect-mongo")(session)
 const settings = require("./config/settings.json")
 const connectToDb = require("./config/db")
 const tagRoutes = require("./API/tagRoutes")
+const recipeRoutes = require("./API/recipeRoutes")
+const ingredientRoutes = require("./API/ingredientRoutes")
 
 connectToDb()
 
 const app = express()
 
 app.use(bodyParser.json())
-app.get("/", (req, res) => res.send("Welcome To Tojj Server"))
+app.get("/", (req, res) => res.send("Welcome To Yaddie Server"))
 global.salt = settings.salt
 
 app.use(
@@ -25,6 +27,6 @@ app.use(
   })
 )
 
-app.use(tagRoutes)
+app.use(tagRoutes, recipeRoutes, ingredientRoutes)
 
-app.listen(5000, () => console.log(`Tojj Server is on port 5000`))
+app.listen(5000, () => console.log(`Yaddie Server is on port 5000`))
