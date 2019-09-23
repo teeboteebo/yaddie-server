@@ -6,7 +6,7 @@ let recipeSchema = new Schema({
   image:        { type: String, required: true },
   time:         { type: Number, required: true },
   portions:     { type: Number, required: true },
-  summary:         { type: String, required: true },
+  summary:      { type: String, required: true },
   rating:       { type: Number, required: true },
   link:         { type: String, unique: true, required: true },
   tags:         { type: Array, required: true },
