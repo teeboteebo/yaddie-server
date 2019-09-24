@@ -92,7 +92,7 @@ router.get("/api/recipes/populated", (req, res) => {
 
 router.get("/api/recipes/populated/:id", (req, res) => {
   const recipe = Recipe.findById(req.params.id)
-    .populate("ingredients")
+    .populate("ingredientType")
     .exec()
     .then(data => {
       res.status(200).send(data)
