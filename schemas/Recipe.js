@@ -22,7 +22,6 @@ let recipeSchema = new Schema({
   portions:     { type: Number, required: true },
   summary:      { type: String, required: true },
   rating:       { type: Number },
-  link:         { type: String, unique: true, required: true },
   tags:         { type: Array, required: true },
   ingredients:  [{ 
     displayName:    { type: String },

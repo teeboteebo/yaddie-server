@@ -101,10 +101,11 @@ router.get("/api/recipes/populated/:id", (req, res) => {
 })
 
 router.post("/api/recipes/", (req, res) => {
-  const recipe = new Recipe(req.body.content)
+  const recipe = new Recipe(req.body)
   recipe.save(function(err) {
     if (err) {
-      next(err)
+      //next(err)
+      console.log(err)
     } else {
       res.status(200).send()
       console.log(recipe, "SAVED")
