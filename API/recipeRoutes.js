@@ -11,6 +11,14 @@ router.get("/api/recipes", async (req, res) => {
     });
 });
 
+router.get("/api/recipes/latest", async (req, res) => {
+  const recipes = Recipe.find({}).sort({"added": -1}).limit(7)
+    .exec()
+    .then(data => {
+      res.status(200).send(data);
+    });
+});
+
 // Find one recipe by id
 
 router.get("/api/recipes/id/:id", (req, res) => {
