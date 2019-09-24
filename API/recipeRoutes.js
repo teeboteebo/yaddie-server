@@ -103,9 +103,11 @@ router.post("/api/recipes/", (req, res) => {
   console.log('first', req.body);
 
   const recipe = new Recipe(req.body)
-  console.log('secnd', recipe);
-  for (let ingredient of recipe.ingredients) {
-    delete ingredient._id
+  if (!recipe.image){
+    recipe.image = "/images/no-image.jpg"
+  }
+  if (!recipe.rating){
+    recipe.rating = 2.5
   }
   recipe.save(function (err) {
     if (err) {
