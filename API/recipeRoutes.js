@@ -4,8 +4,7 @@ const Recipe = require("../schemas/Recipe")
 const router = express.Router()
 
 router.get("/api/recipes", async (req, res) => {
-  const recipes = Recipe.find({ heading: { $in: ["Spa"] } })
-    .exec()
+  const recipes = Recipe.find()
     .then(data => {
       res.status(200).send(data)
     })
@@ -54,6 +53,7 @@ router.get("/api/recipes/search/:search", async (req, res) => {
       res.status(200).send(data)
     })
 })
+
 
 // Handle search page requests
 router.get("/api/recipes/search", async (req, res) => {
@@ -122,7 +122,7 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
   recipe.time = req.body.content.time
   recipe.tags = req.body.content.tags
 
-  recipe.save(function(err) {
+  recipe.save(function (err) {
     if (err) {
       next(err)
     } else {
