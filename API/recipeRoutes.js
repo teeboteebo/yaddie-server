@@ -4,7 +4,7 @@ const Recipe = require("../schemas/Recipe");
 const router = express.Router();
 
 router.get("/api/recipes", async (req, res) => {
-  const recipes = Recipe.find({})
+  const recipes = Recipe.find({ heading: { "$in": ['Spa'] } })
     .exec()
     .then(data => {
       res.status(200).send(data);
@@ -28,8 +28,7 @@ router.get("/api/recipes/id/:id", (req, res) => {
       return "No match";
     })
     .then(data => {
-      console.log(data);
-      res.status(200).send(data);
+      res.status(200).send(data)
     });
 });
 
@@ -44,6 +43,31 @@ router.get("/api/recipes/search/:search", async (req, res) => {
       res.status(200).send(data);
     });
 });
+
+})
+
+// Handle search page requests
+router.get("/api/recipes/search", async (req, res) => {
+  const category = req.query.kategori ? new RegExp(req.query.kategori, "i") : ''
+  const recipeName = req.query.namn ? new RegExp(req.query.namn, "i") : ''
+
+  // Both tag and name
+  if (category && recipeName) {
+    Recipe.find({ tags: category, heading: recipeName })
+      .then(data => { res.status(200).send(data) })
+  }
+  // Only tag(s)
+  else if (category && !recipeName) {
+    Recipe.find({ tags: category })
+    .then(data => { res.status(200).send(data) })
+  }
+
+  // Only name(s)
+  else if (!category && recipeName) {
+    Recipe.find({ heading: recipeName })
+    .then(data => { res.status(200).send(data) })
+  }
+})
 
 router.get("/api/recipes/populated", (req, res) => {
   Recipe.find()
