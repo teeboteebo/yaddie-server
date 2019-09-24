@@ -21,6 +21,15 @@ router.get("/api/recipes/latest", async (req, res) => {
     })
 })
 
+router.get("/api/recipes/first", async (req, res) => {
+  const recipes = Recipe.find({})
+    .limit(6)
+    .exec()
+    .then(data => {
+      res.status(200).send(data)
+    })
+})
+
 // Find one recipe by id
 
 router.get("/api/recipes/id/:id", (req, res) => {
