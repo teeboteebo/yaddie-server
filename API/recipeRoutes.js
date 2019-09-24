@@ -83,7 +83,7 @@ router.get("/api/recipes/search", async (req, res) => {
 
 router.get("/api/recipes/populated", (req, res) => {
   Recipe.find()
-    // .populate("tags")
+    .populate("ingredients")
     .exec()
     .then(data => {
       res.status(200).send(data)
@@ -92,7 +92,6 @@ router.get("/api/recipes/populated", (req, res) => {
 
 router.get("/api/recipes/populated/:id", (req, res) => {
   const recipe = Recipe.findById(req.params.id)
-    .populate("tags")
     .populate("ingredients")
     .exec()
     .then(data => {
