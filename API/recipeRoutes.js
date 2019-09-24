@@ -83,7 +83,7 @@ router.get("/api/recipes/search", async (req, res) => {
 
 router.get("/api/recipes/populated", (req, res) => {
   Recipe.find()
-    .populate("ingredients")
+    .populate("ingredients.ingredientType")
     .exec()
     .then(data => {
       res.status(200).send(data)
@@ -92,7 +92,7 @@ router.get("/api/recipes/populated", (req, res) => {
 
 router.get("/api/recipes/populated/:id", (req, res) => {
   const recipe = Recipe.findById(req.params.id)
-    .populate("ingredientType")
+    .populate('ingredients.ingredientType')
     .exec()
     .then(data => {
       res.status(200).send(data)
@@ -100,8 +100,14 @@ router.get("/api/recipes/populated/:id", (req, res) => {
 })
 
 router.post("/api/recipes/", (req, res) => {
+  console.log('first', req.body);
+
   const recipe = new Recipe(req.body)
-  recipe.save(function(err) {
+  console.log('secnd', recipe);
+  for (let ingredient of recipe.ingredients) {
+    delete ingredient._id
+  }
+  recipe.save(function (err) {
     if (err) {
       //next(err)
       console.log(err)
@@ -133,7 +139,7 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
 
 router.delete("/api/recipes/id/:id/delete", async (req, res) => {
   const recipe = await Recipe.findById(req.params.id)
-  recipe.delete(function(err) {
+  recipe.delete(function (err) {
     if (err) {
       next(err)
     } else {
