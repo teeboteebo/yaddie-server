@@ -4,8 +4,7 @@ const Recipe = require("../schemas/Recipe");
 const router = express.Router();
 
 router.get("/api/recipes", async (req, res) => {
-  const recipes = Recipe.find({ heading: { "$in": ['Spa'] } })
-    .exec()
+  const recipes = Recipe.find()
     .then(data => {
       res.status(200).send(data);
     });
@@ -36,7 +35,7 @@ router.get("/api/recipes/search/:search", async (req, res) => {
     });
 });
 
-})
+
 
 // Handle search page requests
 router.get("/api/recipes/search", async (req, res) => {
@@ -51,13 +50,13 @@ router.get("/api/recipes/search", async (req, res) => {
   // Only tag(s)
   else if (category && !recipeName) {
     Recipe.find({ tags: category })
-    .then(data => { res.status(200).send(data) })
+      .then(data => { res.status(200).send(data) })
   }
 
   // Only name(s)
   else if (!category && recipeName) {
     Recipe.find({ heading: recipeName })
-    .then(data => { res.status(200).send(data) })
+      .then(data => { res.status(200).send(data) })
   }
 })
 
@@ -82,7 +81,7 @@ router.get("/api/recipes/populated/:id", (req, res) => {
 
 router.post("/api/recipes/", (req, res) => {
   const recipe = new Recipe(req.body.content);
-  recipe.save(function(err) {
+  recipe.save(function (err) {
     if (err) {
       next(err);
     } else {
@@ -102,7 +101,7 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
   recipe.time = req.body.content.time;
   recipe.tags = req.body.content.tags;
 
-  recipe.save(function(err) {
+  recipe.save(function (err) {
     if (err) {
       next(err);
     } else {
@@ -113,7 +112,7 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
 
 router.delete("/api/recipes/id/:id/delete", async (req, res) => {
   const recipe = await Recipe.findById(req.params.id);
-  recipe.delete(function(err) {
+  recipe.delete(function (err) {
     if (err) {
       next(err);
     } else {
