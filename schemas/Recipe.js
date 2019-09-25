@@ -11,11 +11,11 @@ let recipeSchema = new Schema({
   tags:         { type: Array, required: true },
   ingredients:  [{ 
     displayName:    { type: String },
-    ingredientType: { type: Schema.Types.ObjectId, ref: 'Ingredient', required: true },
+    ingredientType: { type: Schema.Types.ObjectId, ref: 'Ingredient' },
     quantity:       { type: Number, required: true },
     unit:           { type: String, required: true }
   }],
-  instructions: { type: Array, required: true },
+  instructions: { type: Array },
 })
 
 module.exports = mongoose.model("Recipe", recipeSchema)

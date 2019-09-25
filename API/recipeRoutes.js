@@ -88,7 +88,7 @@ router.get("/api/recipes/populated", (req, res) => {
     })
 })
 
-router.get("/api/recipes/populated/:id", (req, res) => {
+router.get("/api/recipes/populated/:id", (req, res) => {  
   const recipe = Recipe.findById(req.params.id)
     .populate("ingredients.ingredientType")
     .exec()
@@ -123,7 +123,6 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
   recipe.name = req.body.content.name
   recipe.desc = req.body.content.desc
   recipe.rating = req.body.content.rating
-  recipe.link = req.body.content.link
   recipe.image = req.body.content.image
   recipe.time = req.body.content.time
   recipe.tags = req.body.content.tags
