@@ -112,7 +112,7 @@ router.post("/api/recipes/", (req, res) => {
       //next(err)
       console.log(err)
     } else {
-      res.status(200).send()
+      res.status(200).send(recipe)
       console.log(recipe, "SAVED")
     }
   })
