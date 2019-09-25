@@ -15,7 +15,6 @@ let recipeSchema = new Schema({
     quantity:       { type: Number, required: true },
     unit:           { type: String, required: true }
   }],
-  nutrients:    { type: Array, required: true },
   instructions: { type: Array, required: true },
 })
 

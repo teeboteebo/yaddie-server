@@ -4,15 +4,14 @@ const Recipe = require("../schemas/Recipe")
 const router = express.Router()
 
 router.get("/api/recipes", async (req, res) => {
-  const recipes = Recipe.find()
-    .then(data => {
-      res.status(200).send(data)
-    })
+  const recipes = Recipe.find().then(data => {
+    res.status(200).send(data)
+  })
 })
 
 router.get("/api/recipes/latest", async (req, res) => {
   const recipes = Recipe.find({})
-    .sort({ added: -1 })
+    .sort({ _id: -1 })
     .limit(7)
     .exec()
     .then(data => {
@@ -54,7 +53,6 @@ router.get("/api/recipes/search/:search", async (req, res) => {
     })
 })
 
-
 // Handle search page requests
 router.get("/api/recipes/search", async (req, res) => {
   const category = req.query.kategori ? new RegExp(req.query.kategori, "i") : ""
@@ -92,7 +90,7 @@ router.get("/api/recipes/populated", (req, res) => {
 
 router.get("/api/recipes/populated/:id", (req, res) => {
   const recipe = Recipe.findById(req.params.id)
-    .populate('ingredients.ingredientType')
+    .populate("ingredients.ingredientType")
     .exec()
     .then(data => {
       res.status(200).send(data)
@@ -100,14 +98,16 @@ router.get("/api/recipes/populated/:id", (req, res) => {
 })
 
 router.post("/api/recipes/", (req, res) => {
-  console.log('first', req.body);
+  console.log("first", req.body)
 
   const recipe = new Recipe(req.body)
-  console.log('secnd', recipe);
-  for (let ingredient of recipe.ingredients) {
-    delete ingredient._id
+  if (!recipe.image) {
+    recipe.image = "/images/no-image.jpg"
   }
-  recipe.save(function (err) {
+  if (!recipe.rating) {
+    recipe.rating = 2.5
+  }
+  recipe.save(function(err) {
     if (err) {
       //next(err)
       console.log(err)
@@ -128,7 +128,7 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
   recipe.time = req.body.content.time
   recipe.tags = req.body.content.tags
 
-  recipe.save(function (err) {
+  recipe.save(function(err) {
     if (err) {
       next(err)
     } else {
@@ -139,7 +139,7 @@ router.put("/api/recipes/id/:id/edit", async (req, res) => {
 
 router.delete("/api/recipes/id/:id/delete", async (req, res) => {
   const recipe = await Recipe.findById(req.params.id)
-  recipe.delete(function (err) {
+  recipe.delete(function(err) {
     if (err) {
       next(err)
     } else {
